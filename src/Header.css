@@ -10,7 +10,7 @@
 
 .logo {
   font-size: 24px;
-  margin-right: 20px; 
+ 
   margin-left:300px;/* Add margin for spacing between logo and search bar */
 }
 
@@ -18,7 +18,7 @@
   width: 70%; /* Set the width of the search container to 70% */
   display: flex;
   justify-content: center; 
-  margin-left:300px;
+  margin-left:30px;
 }
 
 .search-bar {
