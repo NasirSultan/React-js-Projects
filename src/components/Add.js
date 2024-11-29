@@ -12,19 +12,23 @@ const Add = ({ onItemAdded }) => {
         // Prevents the default form submission behavior, which would cause the page to reload
         e.preventDefault();
 
+
         // Creating a new item object with the title from the input field
-        const newItem = { title };
+        const newItem = { title };   //When the key and value have the same name, you can use the shorthand { keyName }, instead of writing it as { keyName: keyName }.
 
         // Using the addItem function (imported from the API module) to send the new item data
         // The function is asynchronous, so we await its response
         const addedItem = await addItem(newItem);
 
-        // If the item was successfully added, we update the parent component with the new item
-        // This is achieved by calling the onItemAdded function passed as a prop
-        if (addedItem) {
-            onItemAdded(addedItem);  // Passing the added item back to the parent component
-            setTitle('');  // Resetting the title input field to an empty string after successful addition
-        }
+    
+        
+            onItemAdded(addedItem);  // The purpose is to inform the parent component that a new item has been added. 
+            // This is a common pattern in React called "lifting state up", where a child component communicates changes to its parent.
+            // The addedItem is passed as an argument, allowing the parent component to update its state 
+
+            setTitle('');  //This line resets the input field to an empty string after successfully adding the item.
+
+        
     };
 
     return (
