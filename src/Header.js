@@ -21,10 +21,10 @@ function Header() {
         {/* Check if user is logged in */}
         {localStorage.getItem('user-info') ? (
           <>
-            <Link to="/add" className="nav-link">
+            <Link to="/add-project" className="nav-link">
               Add Product
             </Link>
-            <Link to="/update" className="nav-link">
+            <Link to="/update-project" className="nav-link">
               Update Product
             </Link>
           </>
