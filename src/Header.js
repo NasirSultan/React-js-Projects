@@ -21,6 +21,9 @@ function Header() {
         {/* Check if user is logged in */}
         {localStorage.getItem('user-info') ? (
           <>
+           <Link to="/" className="nav-link">
+               Product List
+            </Link>
             <Link to="/add-project" className="nav-link">
               Add Product
             </Link>

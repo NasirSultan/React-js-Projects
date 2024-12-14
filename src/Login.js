@@ -84,7 +84,7 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className="btn btn-primary btn-block py-3 px-5 rounded-pill shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out"
+              className="btn btn-primary form-group mb-4 btn-block py-3 px-5 rounded-pill shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out"
             >
               Login
             </button>

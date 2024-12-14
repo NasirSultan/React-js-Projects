@@ -7,12 +7,14 @@ import UpdateProject from './UpdateProject';
 import Login from './Login';
 import Register from './Register';
 import Protected from './Protected';
+import Productlist from './Productlist';
 
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
+        <Route path="/" element={<Protected Cmp={Productlist} />} />
           <Route path="/add-project" element={<Protected Cmp={AddProject} />} />
           <Route path="/update-project" element={<Protected Cmp={UpdateProject} />} />
           <Route path="/login" element={<Login />} />
