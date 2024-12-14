@@ -38,10 +38,22 @@ function AddProject() {
   return (
     <>
       <Header />
-      <div className="d-flex justify-content-center align-items-center min-vh-100">
-        <div className="card p-4" style={{ width: '100%', maxWidth: '500px' }}>
+      <div className="d-flex justify-content-center min-vh-100" style={{ backgroundColor: '#f0f0f0' }}>
+        <div className="card p-4" style={{
+          width: '50%', 
+          maxWidth: '700px', 
+          backgroundColor: '#ffffff', 
+          borderRadius: '15px', 
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)', 
+          transition: 'all 0.3s ease',
+          marginTop: '5%',
+          marginBottom: '5%',
+        }}>
           <div className="card-body">
-            <h5 className="card-title text-center">Add Project</h5>
+          <h5 className="text-center mb-4 text-blue-500 bg-blue-100 rounded-lg p-4 w-full mx-auto mt-6 pb-4 hover:text-white"
+          >
+  Add Project
+</h5>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <input
@@ -50,6 +62,7 @@ function AddProject() {
                   placeholder="Project Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  style={{ borderRadius: '10px' }}
                 />
               </div>
               <div className="mb-3">
@@ -59,12 +72,18 @@ function AddProject() {
                   placeholder="Project Price"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
+                  style={{ borderRadius: '10px' }}
                 />
               </div>
               <button
                 type="submit"
                 className="btn btn-primary btn-block py-3 px-5 rounded-pill shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out w-full"
-
+                style={{
+                  backgroundColor: '#007bff',
+                  borderColor: '#007bff',
+                  borderRadius: '30px',
+                  transition: 'all 0.3s ease',
+                }}
               >
                 Submit
               </button>
