@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function AddProject() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
   // handle form submission
@@ -23,8 +24,12 @@ function AddProject() {
       });
 
       if (response.ok) {
-        // Redirect if the request is successful
-        navigate('/update-project');
+        // Show success message and redirect after a short delay
+        setSuccessMessage('Project added successfully!');
+        setTimeout(() => {
+          setSuccessMessage('');
+          navigate('/');
+        }, 2000); // Hide message after 2 seconds
       } else {
         // Handle error if the response is not okay
         console.error('Failed to submit project');
@@ -39,21 +44,30 @@ function AddProject() {
     <>
       <Header />
       <div className="d-flex justify-content-center min-vh-100" style={{ backgroundColor: '#f0f0f0' }}>
-        <div className="card p-4" style={{
-          width: '50%', 
-          maxWidth: '700px', 
-          backgroundColor: '#ffffff', 
-          borderRadius: '15px', 
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)', 
-          transition: 'all 0.3s ease',
-          marginTop: '5%',
-          marginBottom: '5%',
-        }}>
+        <div
+          className="card p-4"
+          style={{
+            width: '50%',
+            maxWidth: '700px',
+            backgroundColor: '#ffffff',
+            borderRadius: '15px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            transition: 'all 0.3s ease',
+            marginTop: '5%',
+            marginBottom: '5%',
+          }}
+        >
           <div className="card-body">
-          <h5 className="text-center mb-4 text-blue-500 bg-blue-100 rounded-lg p-4 w-full mx-auto mt-6 pb-4 hover:text-white"
-          >
-  Add Project
-</h5>
+            <h5
+              className="text-center mb-4 text-blue-500 bg-blue-100 rounded-lg p-4 w-full mx-auto mt-6 pb-4 hover:text-white"
+            >
+              Add Project
+            </h5>
+            {successMessage && (
+              <div className="alert alert-success" role="alert">
+                {successMessage}
+              </div>
+            )}
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <input

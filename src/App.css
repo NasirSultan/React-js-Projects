@@ -6,3 +6,22 @@
 #lin{
     padding-left: 30px;
 }
+
+.hover-effect:hover {
+    background-color: #6c757d; /* Change to any color you prefer */
+    color: white; /* Change the text color to white on hover */
+  }
+  /* Add this CSS to your global styles */
+.hover-effect:hover {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+  }
+  /* styles.css */
+  .icon-store { color: #FF6347; }
+  .icon-box { color: #1E90FF; }
+  .icon-addProduct { color: #32CD32; }
+  .icon-signIn { color: #FFD700; }
+  .icon-userPlus { color: #8A2BE2; }
+  .icon-signOut { color: #FF4500; }
+  .icon-profile { color: #8B0000; }
+  .icon-user { color: #2E8B57; }

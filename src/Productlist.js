@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import Header from './Header';
-
+import {Link} from 'react-router-dom';
 function ProductList() {
   const [data, setData] = useState([]);
 
@@ -59,6 +59,14 @@ function ProductList() {
                     >
                       Delete
                     </Button>
+                  </td>
+                  <td>
+                    <Link to = {"update-project/"+item.id}>
+                   
+                    <Button>
+                     update
+                    </Button>
+                    </Link>
                   </td>
                 </tr>
               ))
