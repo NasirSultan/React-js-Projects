@@ -47,7 +47,7 @@ const Login = () => {
   useEffect(() => {
     // If user data is available, redirect to the /add-project page
     if (user) {
-      navigate('/add-project'); // Redirecting to /add-project
+      navigate('/'); // Redirecting to /add-project
     }
   }, [user, navigate]); // Dependency array includes `user` and `navigate`
 
