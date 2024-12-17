@@ -6,3 +6,27 @@
 #lin{
     padding-left: 30px;
 }
+
+/* Style for the outer container div */
+.container-wrapper {
+    background-color: #f9f9f9; /* Light background color */
+    border: 1px solid lightgray; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition */
+  }
+  
+  /* Hover effect for the outer container */
+  .container-wrapper:hover {
+    background-color: #f0f0f0; /* Light gray background on hover */
+  }
+  
+  /* Hover effect for the classroom rows inside the table */
+  .table tbody tr {
+    border: 1px solid lightgray; /* Light border */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f0f0f0; /* Light gray background on hover */
+  }
+  

@@ -1,63 +1,104 @@
 import React, { useState, useEffect } from 'react';
 
-function ClassList() {
-  const [classes, setClasses] = useState([]);
-  const [search, setSearch] = useState('');
+const ClassList = () => {
+  const [classrooms, setClassrooms] = useState([]); // State to store the classrooms list
+  const [loading, setLoading] = useState(false); // State to handle loading state
+  const [error, setError] = useState(''); // State to handle error message
 
-  useEffect(() => {
-    const fetchClasses = async () => {
-      try {
-        const response = await fetch.get('http://your-laravel-api-url/classes', {
-          params: { search }
-        });
-        setClasses(response.data);
-      } catch (error) {
-        console.error('Error fetching classes', error);
+  // Function to fetch the list of classrooms
+  const fetchClassrooms = async () => {
+    setLoading(true); // Set loading to true when the request starts
+    setError(''); // Clear any previous errors
+
+    try {
+      const response = await fetch('http://localhost:8000/api/classrooms'); // Adjust API endpoint as necessary
+      if (!response.ok) {
+        throw new Error('Failed to fetch classrooms');
       }
-    };
-
-    fetchClasses();
-  }, [search]);
-
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value);
+      const data = await response.json(); // Parse JSON from the response
+      setClassrooms(data); // Set the classrooms state with the API response
+    } catch (err) {
+      setError('Error fetching classrooms. Please try again later.');
+    } finally {
+      setLoading(false); // Set loading to false after the request is complete
+    }
   };
 
+  // Fetch classrooms when the component mounts
+  useEffect(() => {
+    fetchClassrooms();
+  }, []); // Empty dependency array to fetch classrooms only once
+
   return (
-    <div className="flex justify-center pt-6"> {/* Removed min-h-screen, added pt-6 for top padding */}
-      <div className="w-4/5 p-6 bg-white shadow-lg rounded-lg">
-        <div className="mb-4 mt-6">
-          <input
-            type="text"
-            placeholder="Search by class, student, or subject"
-            value={search}
-            onChange={handleSearchChange}
-            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+    <div className="container-wrapper" style={{ margin: '20px', borderRadius: '8px' }}>
+      <div className="container">
+        <div className="row justify-content-center my-5">
+          <div className="col-12 col-md-8">
+            <h1 className="text-center" style={{ width: '80%', margin: '0 auto' }}>Unified List View</h1>
+          </div>
         </div>
-        <div className="overflow-auto">
-          <ul className="space-y-4">
-            {classes.map((classItem) => (
-              <li
-                key={classItem.class_name}
-                className="p-4 border border-gray-200 rounded-lg shadow-md hover:shadow-xl transition-all"
-              >
-                <h3 className="text-xl font-semibold mb-2">{classItem.class_name}</h3>
-                <ul className="space-y-2">
-                  {classItem.students.map((student) => (
-                    <li key={student.student_name} className="pl-4">
-                      <h4 className="text-lg font-medium">{student.student_name}</h4>
-                      <p className="text-sm text-gray-500">Subjects: {student.subjects.join(', ')}</p>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </div>
+
+        {loading && <p>Loading...</p>}
+
+        {/* Error message centered */}
+        {error && (
+          <div
+            className="error-message"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '200px',
+              textAlign: 'center',
+              fontSize: '18px',
+              color: '#ff4d4d', // Red color for error
+              fontWeight: 'bold',
+            }}
+          >
+            {error}
+          </div>
+        )}
+
+        {classrooms.length > 0 ? (
+          <div className="table-responsive my-3">
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>Classroom Name</th>
+                  <th>
+                    <i className="fas fa-user-graduate"></i> Student
+                  </th>
+                  <th>
+                    <i className="fas fa-book"></i> Subject
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {classrooms.map((classroom) => (
+                  <tr
+                    key={classroom.classroom_id}
+                    style={{
+                      border: '1px solid lightgray', // Light border around the row
+                      transition: 'background-color 0.3s ease', // Smooth transition for background color
+                    }}
+                    className="classroom-row"
+                  >
+                    <td>{classroom.classroom_name}</td>
+                    <td>{classroom.student_name}</td>
+                    <td>{classroom.subject_name}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="d-flex justify-content-center align-items-center" style={{ height: '200px' }}>
+            <p>No classrooms found</p>
+          </div>
+        )}
       </div>
     </div>
   );
-}
+};
 
 export default ClassList;
