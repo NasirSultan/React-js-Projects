@@ -77,8 +77,8 @@ const LeaveApproval = () => {
       <>
       <AdminDashboard/>
 
-        <Container style={{ maxWidth: '80%', marginTop: '20px' }}>
-            <div style={{ width: '80%', margin: '0 auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px', transition: 'all 0.3s' }}
+        <Container style={{ maxWidth: '90%', marginTop: '20px' }}>
+            <div style={{ width: '90%', margin: '0 auto', padding: '20px', border: '1px  #ddd', borderRadius: '8px', transition: 'all 0.3s' }}
                 onMouseEnter={(e) => e.currentTarget.style.border = '1px solid #007bff'}
                 onMouseLeave={(e) => e.currentTarget.style.border = '1px solid #ddd'}>
 

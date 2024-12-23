@@ -15,6 +15,7 @@ import LoginForm from './UserPanel/LoginForm';
 import Profile from './UserPanel/Profile';
 import AdminProfile from './AdminPanel/AdminProfile';
 import LeaveRequestStatus from './UserPanel/LeaveRequestStatus';
+import AttendanceComponent from './AdminPanel/AttendanceComponent';
 
 
 const App = () => {
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/leave-requset" element={<Leaverequest />} />
           <Route path="/LoginForm" element={<LoginForm />} />
           <Route path="/Profile" element={<Profile />} />
+          <Route path="/AttendanceComponent" element={<AttendanceComponent />} />
      
           <Route path="/AdminProfile" element={<AdminProfile />} />
           <Route path="/LeaveRequestStatus" element={<LeaveRequestStatus />} />

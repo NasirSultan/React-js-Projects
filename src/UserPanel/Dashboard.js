@@ -1,25 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, NavDropdown, Container, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-  const user = { 
-    name: "John Doe", 
-    role: "User", 
-    pin: "123456", 
-    profilePic: "https://via.placeholder.com/40" // Example placeholder image
-  };
+  const [user, setUser] = useState({
+    name: '',
+    role: '',
+    pin: '',
+    profilePic: ''
+  });
+
+  const navigate = useNavigate();
+
+  // Fetch user data from API using Fetch API
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/LoginForm'); // Redirect to login if token is missing
+    } else {
+      fetch('http://localhost:8000/api/user', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error('Failed to fetch user data');
+        })
+        .then((data) => {
+          setUser(data);
+        })
+        .catch((error) => {
+          console.error('Error fetching user data:', error);
+          navigate('/login'); // Redirect to login on error
+        });
+    }
+  }, [navigate]);
 
   const logout = () => {
-    console.log("Logging out");
-    // Add logout functionality here
+    localStorage.removeItem('token'); // Remove token from storage
+    navigate('/LoginForm'); // Redirect to login page
   };
 
   // Unified styles
   const iconStyles = {
     fontSize: '16px', // Icon size
     marginRight: '8px',
-    transition: 'color 0.3s ease', // Smooth hover transition for icons
+    transition: 'color 0.3s ease' // Smooth hover transition for icons
   };
 
   const linkStyles = {
@@ -28,11 +59,11 @@ const Dashboard = () => {
     color: '#fff', // Default white color
     textDecoration: 'none', // No underline
     transition: 'color 0.3s ease', // Smooth hover transition for text
-    marginLeft: '8px',
+    marginLeft: '8px'
   };
 
   const hoverStyles = {
-    color: '#ffc107', // Gold hover color for both icons and text
+    color: '#ffc107' // Gold hover color for both icons and text
   };
 
   return (
@@ -55,16 +86,13 @@ const Dashboard = () => {
                   className="nav-link d-flex align-items-center"
                   style={linkStyles}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = hoverStyles.color; // Change text color on hover
+                    e.currentTarget.style.color = hoverStyles.color;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = linkStyles.color; // Revert text color on hover leave
+                    e.currentTarget.style.color = linkStyles.color;
                   }}
                 >
-                  <i
-                    className="fas fa-user-edit"
-                    style={iconStyles}
-                  ></i>
+                  <i className="fas fa-user-edit" style={iconStyles}></i>
                   Update Profile
                 </Link>
 
@@ -74,10 +102,10 @@ const Dashboard = () => {
                   className="nav-link d-flex align-items-center"
                   style={{ ...linkStyles, marginLeft: '16px' }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = hoverStyles.color; // Change both text and icon on hover
+                    e.currentTarget.style.color = hoverStyles.color;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = linkStyles.color; // Revert to default on hover leave
+                    e.currentTarget.style.color = linkStyles.color;
                   }}
                 >
                   <i className="fas fa-calendar-check" style={iconStyles}></i>
@@ -102,7 +130,7 @@ const Dashboard = () => {
 
                 {/* View List */}
                 <Link
-                  to="/leave-requset"
+                  to="/AdminProfile"
                   className="nav-link d-flex align-items-center"
                   style={{ ...linkStyles, marginLeft: '16px' }}
                   onMouseEnter={(e) => {
@@ -122,30 +150,28 @@ const Dashboard = () => {
             <Col xs={12} md={4} className="d-flex justify-content-end align-items-center">
               <div className="d-flex align-items-center">
                 <img
-                  src={user.profilePic}
+                  src={user.profilePic || 'https://via.placeholder.com/40'}
                   alt="Profile"
-                  style={{ borderRadius: '50%', width: '35px', height: '35px', marginRight: '8px' }}
+                  style={{
+                    borderRadius: '50%',
+                    width: '35px',
+                    height: '35px',
+                    marginRight: '8px'
+                  }}
                 />
                 <span className="text-light" style={{ fontSize: '14px', fontWeight: '500' }}>
-                  {user.name}
+                  {user.name || 'Loading...'}
                 </span>
               </div>
               <Nav>
-                <NavDropdown
-                  title=""
-                  id="nav-dropdown"
-                  align="end"
-                  className="ms-3"
-                >
+                <NavDropdown title="" id="nav-dropdown" align="end" className="ms-3">
                   <NavDropdown.Item onClick={logout}>
                     <i className="fas fa-sign-out-alt" style={iconStyles}></i> Logout
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#profile">
+                  <NavDropdown.Item href="/Profile">
                     <i className="fas fa-user" style={iconStyles}></i> Profile
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#pin">
-                    <i className="fas fa-id-card" style={iconStyles}></i> Pin: {user.pin}
-                  </NavDropdown.Item>
+                
                 </NavDropdown>
               </Nav>
             </Col>
