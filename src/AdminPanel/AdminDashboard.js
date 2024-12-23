@@ -90,7 +90,7 @@ const AdminDashboard = () => {
               <Nav className="d-flex align-items-center">
                 {/* Update Profile */}
                 <Link
-                  to=""
+                  to="/admin/reports"
                   className="nav-link d-flex align-items-center"
                   style={linkStyles}
                   onMouseEnter={(e) => {
@@ -104,7 +104,7 @@ const AdminDashboard = () => {
                     className="fas fa-user-edit"
                     style={iconStyles}
                   ></i>
-                  Update Profile
+                  attendance Report
                 </Link>
 
                 {/* Report */}
