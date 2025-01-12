@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Dashboard from './Dashboard';
 
-
 const LeaveRequest = () => {
   const [reason, setReason] = useState('');
   const [date, setDate] = useState('');
@@ -38,13 +37,22 @@ const LeaveRequest = () => {
     <>
       <Dashboard />
 
-      <div className="d-flex justify-content-center align-items-center vh-70 pt-4">
+      <div
+        style={{
+          marginLeft: '250px', // Ensure the content respects the sidebar
+         marginTop: '40px',// Make the container full height
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: '#f8f9fa',
+        }}
+      >
         <div
           className="p-4 rounded shadow-lg"
           style={{
-            width: '89%',
-            background: '#f1f3f5', // Lighter background color
-            border: '1px solid #ccc', // Lighter border
+            width: '70%', // Increased width for the card
+            background: '#f1f3f5',
+            border: '1px solid #ccc',
             transition: 'box-shadow 0.3s ease',
           }}
         >
@@ -85,18 +93,14 @@ const LeaveRequest = () => {
             </button>
             <Link
               to="/LeaveRequestStatus"
-              className="btn btn-primary w-100"
-              style={{ transition: 'background-color 0.3s ease',marginTop: '20px'}}
-
-
+              className="btn btn-secondary w-100 mt-3"
+              style={{ transition: 'background-color 0.3s ease' }}
             >
-
-Leave Request Status
+              View Leave Request Status
             </Link>
           </form>
-          {message && <p className="mt-3 text-center">{message}</p>}
+          {message && <p className="mt-3 text-center text-success">{message}</p>}
         </div>
-
       </div>
     </>
   );

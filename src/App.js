@@ -16,7 +16,7 @@ import Profile from './UserPanel/Profile';
 import AdminProfile from './AdminPanel/AdminProfile';
 import LeaveRequestStatus from './UserPanel/LeaveRequestStatus';
 import AttendanceComponent from './AdminPanel/AttendanceComponent';
-
+import AttendanceReport  from './AdminPanel/AttendanceReport ';
 
 const App = () => {
   return (
@@ -41,6 +41,8 @@ const App = () => {
      
           <Route path="/AdminProfile" element={<AdminProfile />} />
           <Route path="/LeaveRequestStatus" element={<LeaveRequestStatus />} />
+          <Route path="/AttendanceReport" element={<AttendanceReport  />} />
+
         </Routes>
       </div>
     </Router>

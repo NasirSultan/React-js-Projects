@@ -39,59 +39,73 @@ const CheckLeaveRequest = () => {
 
   return (
     <>
-    <Dashboard />
-    <div
-      className="container mt-5 p-4"
-      style={{
-        maxWidth: "80%",
-        border: "2px lightblue ",
-        borderRadius: "8px",
-        transition: "transform 0.3s, box-shadow 0.3s",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "scale(1.02)";
-        e.currentTarget.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.2)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "scale(1)";
-        e.currentTarget.style.boxShadow = "none";
-      }}
-    >
-      <h2 className="text-center mb-4">Check Leave Request Status</h2>
+      <Dashboard />
 
-      <div className="text-center mb-4">
-        <button className="btn btn-primary" onClick={handleCheckRequest}>
-          Fetch Leave Requests
-        </button>
-      </div>
+      <div
+        style={{
+          marginLeft: '250px', // Sidebar width adjustment
+          padding: '20px',
+       
+          background: '#f8f9fa',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          className="container p-4"
+          style={{
+            maxWidth: "80%",
+            border: "2px brown lightblue",
+            borderRadius: "8px",
+            transition: "transform 0.3s, box-shadow 0.3s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.02)";
+            e.currentTarget.style.boxShadow = "0 4px 20px rgba(218, 197, 197, 0.2)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "none";
+          }}
+        >
+          <h2 className="text-center mb-4">Check Leave Request Status</h2>
 
-      {error && <div className="alert alert-danger text-center">{error}</div>}
+          <div className="text-center mb-4">
+            <button className="btn btn-primary" onClick={handleCheckRequest}>
+              Fetch Leave Requests
+            </button>
+          </div>
 
-      {leaveRequests.length > 0 ? (
-        <div className="table-responsive">
-          <table className="table table-striped table-bordered">
-            <thead className="thead-dark">
-              <tr>
-                <th>Reason</th>
-                <th>Status</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {leaveRequests.map((request) => (
-                <tr key={request.id}>
-                  <td>{request.reason}</td>
-                  <td>{request.status}</td>
-                  <td>{request.date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {error && <div className="alert alert-danger text-center">{error}</div>}
+
+          {leaveRequests.length > 0 ? (
+            <div className="table-responsive">
+              <table className="table table-striped table-bordered">
+                <thead className="thead-dark">
+                  <tr>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {leaveRequests.map((request) => (
+                    <tr key={request.id}>
+                      <td>{request.reason}</td>
+                      <td>{request.status}</td>
+                      <td>{request.date}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            !error && <p className="text-center">No leave requests found.</p>
+          )}
         </div>
-      ) : (
-        !error && <p className="text-center">No leave requests found.</p>
-      )}
-    </div>
+      </div>
     </>
   );
 };

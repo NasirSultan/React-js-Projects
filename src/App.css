@@ -30,3 +30,119 @@
     background-color: #f0f0f0; /* Light gray background on hover */
   }
   
+
+  .hover-effect {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .hover-effect:hover {
+    border: 2px solid #007bff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+
+  /* Dashboard.css */
+
+/* Link styling */
+.nav-link {
+  color: white !important;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin-right: 16px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+/* Icon styling */
+.nav-link i {
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+/* Hover effect on links */
+.nav-link:hover {
+  color: #ffc107 !important; /* Change color to yellow on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Optional: Add active link styles */
+.nav-link.active {
+  color: #ffc107 !important; /* Active link color */
+}
+
+
+
+/* General Layout */
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #343a40;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sidebar li:hover {
+  background-color: #495057;
+}
+
+.content-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 60px;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 20px;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa;
+}
+
+/* Update Profile Picture */
+.update-profile-container {
+  width: 400px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  text-align: center;
+}
+
+.update-profile-container h2 {
+  margin-bottom: 20px;
+}

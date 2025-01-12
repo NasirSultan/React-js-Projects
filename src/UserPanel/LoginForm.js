@@ -42,7 +42,7 @@ const LoginForm = () => {
 
         // Redirect based on the user role
         if (data.user.role === 'user') {
-          window.location.href = '/edit-profile'; // Redirect to edit profile if role is user
+          window.location.href = '/Profile'; // Redirect to edit profile if role is user
         } else if (data.user.role === 'admin') {
           window.location.href = '/AdminProfile'; // Redirect to admin dashboard if role is admin
         }

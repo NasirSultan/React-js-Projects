@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Form, ListGroup } from "react-bootstrap";
+import { Card, Button, Table } from "react-bootstrap";
 import Dashboard from "./Dashboard"; // Assuming you have a Dashboard component
 
 const Attendance = () => {
   const [message, setMessage] = useState(""); // State to show success or error message
   const [attendanceList, setAttendanceList] = useState([]); // State to store fetched attendance records
+  const [attendanceSummary, setAttendanceSummary] = useState({
+    present: 0,
+    absent: 0,
+    leave: 0,
+  }); // State to store attendance summary
   const token = localStorage.getItem("token"); // Retrieve token from localStorage (or wherever you store it)
 
   // Function to mark attendance
@@ -16,7 +21,7 @@ const Attendance = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`, // Pass token in Authorization header
         },
-        body: JSON.stringify({ status: "present" }), // Always mark as present
+        body: JSON.stringify({ status: "present" }), // Mark attendance as present
       });
 
       if (response.ok) {
@@ -35,17 +40,22 @@ const Attendance = () => {
   // Function to fetch attendance history
   const fetchAttendanceList = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/attendance/history", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Pass token in Authorization header
-        },
-      });
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/attendance/history",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Pass token in Authorization header
+          },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
-        setAttendanceList(data.attendance || []); // Assume `data.attendance` contains the list
+        const attendance = data.attendance || [];
+        setAttendanceList(attendance); // Set the attendance list
+        calculateAttendanceSummary(attendance); // Update summary statistics
       } else {
         const errorData = await response.json();
         setMessage(errorData.message || "Failed to fetch attendance history.");
@@ -55,6 +65,18 @@ const Attendance = () => {
     }
   };
 
+  // Function to calculate attendance summary
+  const calculateAttendanceSummary = (attendance) => {
+    const summary = attendance.reduce(
+      (acc, record) => {
+        acc[record.status] = (acc[record.status] || 0) + 1;
+        return acc;
+      },
+      { present: 0, absent: 0, leave: 0 }
+    );
+    setAttendanceSummary(summary);
+  };
+
   // Fetch attendance history on component mount
   useEffect(() => {
     fetchAttendanceList();
@@ -62,17 +84,21 @@ const Attendance = () => {
 
   return (
     <>
-    <Dashboard />
-    
-    <div style={{ display: "flex", justifyContent: "center", height: "100vh", marginTop: "20px" }}>
-     
-      <div style={{ width: "80%" }}>
-      
-        <Card className="mb-4">
-          <Card.Body>
-            <Card.Title>Mark Attendance</Card.Title>
-            <Form>
-              {/* Always mark attendance as present */}
+      <Dashboard />
+
+      <div
+        style={{
+          marginLeft: "250px", // Adjust for sidebar width
+          padding: "20px",
+          background: "#f8f9fa",
+          marginTop: "20px",
+        }}
+      >
+        <div style={{ width: "90%" }}>
+          {/* Mark Attendance Section */}
+          <Card className="mb-4" style={{ border: "1px solid #ddd" }}>
+            <Card.Body>
+              <Card.Title>Mark Attendance</Card.Title>
               <Button
                 variant="primary"
                 className="mt-3"
@@ -80,33 +106,95 @@ const Attendance = () => {
               >
                 Mark Present
               </Button>
-            </Form>
-            {message && <p className="mt-3 text-success">{message}</p>} {/* Display message */}
-          </Card.Body>
-        </Card>
+              {message && <p className="mt-3 text-success">{message}</p>}{" "}
+              {/* Display message */}
+            </Card.Body>
+          </Card>
 
-        <Card>
-          <Card.Body>
-            <Card.Title>Attendance History</Card.Title>
-            {attendanceList.length > 0 ? (
-              <ListGroup>
-                {attendanceList.map((record, index) => (
-                  <ListGroup.Item key={index}>
-                    <strong>Date:</strong> {record.date} | <strong>Status:</strong> {record.status}
-                  </ListGroup.Item>
-                ))}
-              </ListGroup>
-            ) : (
-              <p>No attendance records found.</p>
-            )}
-          </Card.Body>
-        </Card>
-      </div>
-  
+          {/* Attendance Summary Section */}
+          <Card className="mb-4" style={{ border: "1px solid #ddd" }}>
+  <Card.Body>
+    <Card.Title>Attendance Summary</Card.Title>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        border: "1px solid #ddd",
+        textAlign: "center", // Ensure text alignment is centered
+      }}
+    >
+      <span
+        style={{
+          padding: "10px",
+          flex: 1, // Make each section equal in width
+          borderRight: "1px solid #ddd",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center", // Vertically center the text
+        }}
+      >
+        <strong>Present:</strong> {attendanceSummary.present}
+      </span>
+      <span
+        style={{
+          padding: "10px",
+          flex: 1,
+          borderRight: "1px solid #ddd",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <strong>Absent:</strong> {attendanceSummary.absent}
+      </span>
+      <span
+        style={{
+          padding: "10px",
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <strong>Leave:</strong> {attendanceSummary.leave}
+      </span>
     </div>
+  </Card.Body>
+</Card>
+
+
+          {/* Attendance History Section */}
+          <Card style={{ border: "1px solid #ddd" }}>
+            <Card.Body>
+              <Card.Title>Attendance History</Card.Title>
+              {attendanceList.length > 0 ? (
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {attendanceList.map((record, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{record.date}</td>
+                        <td>{record.status}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              ) : (
+                <p>No attendance records found.</p>
+              )}
+            </Card.Body>
+          </Card>
+        </div>
+      </div>
     </>
   );
-
 };
 
 export default Attendance;
