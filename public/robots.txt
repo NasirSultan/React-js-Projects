@@ -1,3 +1,16 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow:
+
+
+
+src/
+├── components/
+│   ├── Header.js
+│   ├── UserProfile.js
+│   ├── ThemeToggler.js
+├── context/
+│   └── ThemeContext.js
+├── App.js
+├── index.js
+├── styles.css
